@@ -1,9 +1,6 @@
 <?php
 
-function exibeMensagem($mensagem)
-{
-    echo $mensagem . PHP_EOL;
-};
+include ('Funcoes.php');
 
 $contasCorrentes = [
     '567.890.453-21' => [
@@ -16,20 +13,21 @@ $contasCorrentes = [
     ],
     '567.877.987-12' => [
         'titular' => 'Rodrigo Paiva',
-        'saldo' => 15000
+        'saldo' => 20000
     ]
 ];
 
-$contasCorrentes['567.877.987-12'];
+$contasCorrentes['567.877.987-12'] = sacar($contasCorrentes['567.877.987-12'], 500);
 
-$contasCorrentes['567.877.987-12']['saldo'] -= 10000;
+$contasCorrentes['567.890.453-21'] = depositar($contasCorrentes['567.890.453-21'], 1000);
 
-if (1200 > $contasCorrentes['987.657.890-98']['saldo']) {
-    exibeMensagem("Voce não pode sacar esse valor, porque não tem saldo suficiente!!!");
-} else {
-    echo $contasCorrentes['987.657.890-98']['saldo'] -= 1200;
-}
+unset($contasCorrentes['567.877.987-12']); // essa função remove a variavel no caso a conta dessa key.
+
+titularComLetrasMaiusculas($contasCorrentes['987.657.890-98']);
 
 foreach ($contasCorrentes as $cpf => $conta) {
-    exibeMensagem($cpf . " " . $conta['titular'] . ' ' . $conta['saldo']);
+    ['titular' => $titular, 'saldo' => $saldo] = $conta;
+    exibeMensagem(
+        "$cpf $titular $saldo"
+    );
 }
